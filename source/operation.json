@@ -5,8 +5,8 @@
         "startType": "headless",
         "powerOff": false,
         "shell": [
-            "sed -i '/^IPADDR/c IPADDR=192.168.30.55' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
-            "sed -i '/^GATEWAY/c GATEWAY=192.168.30.1' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
+            "sed -i '/^IPADDR/c IPADDR=192.168.1.55' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
+            "sed -i '/^GATEWAY/c GATEWAY=192.168.1.1' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
             "systemctl restart network"
         ]
     },
@@ -16,8 +16,8 @@
         "startType": "headless",
         "powerOff": false,
         "shell": [
-            "sed -i '/^IPADDR/c IPADDR=192.168.30.56' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
-            "sed -i '/^GATEWAY/c GATEWAY=192.168.30.1' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
+            "sed -i '/^IPADDR/c IPADDR=192.168.1.56' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
+            "sed -i '/^GATEWAY/c GATEWAY=192.168.1.1' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
             "systemctl restart network"
         ]
     },
@@ -27,8 +27,8 @@
         "startType": "headless",
         "powerOff": false,
         "shell": [
-            "sed -i '/^IPADDR/c IPADDR=192.168.30.57' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
-            "sed -i '/^GATEWAY/c GATEWAY=192.168.30.1' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
+            "sed -i '/^IPADDR/c IPADDR=192.168.1.57' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
+            "sed -i '/^GATEWAY/c GATEWAY=192.168.1.1' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
             "systemctl restart network"
         ]
     },
@@ -38,8 +38,8 @@
         "startType": "headless",
         "powerOff": false,
         "shell": [
-            "sed -i '/^IPADDR/c IPADDR=192.168.30.58' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
-            "sed -i '/^GATEWAY/c GATEWAY=192.168.30.1' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
+            "sed -i '/^IPADDR/c IPADDR=192.168.1.58' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
+            "sed -i '/^GATEWAY/c GATEWAY=192.168.1.1' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
             "systemctl restart network"
         ]
     }
