@@ -1,0 +1,50 @@
+{
+    "bg01" : {
+        "username": "root",
+        "password": "root",
+        "startType": "headless",
+        "powerOff": false,
+        "shell": [
+            "sed -i '/^IPADDR/c IPADDR=192.168.30.55' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
+            "sed -i '/^GATEWAY/c GATEWAY=192.168.30.1' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
+            "systemctl restart network"
+        ]
+    },
+    "bg02" : {
+        "username": "root",
+        "password": "root",
+        "startType": "headless",
+        "powerOff": false,
+        "shell": [
+            "sed -i '/^IPADDR/c IPADDR=192.168.30.56' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
+            "sed -i '/^GATEWAY/c GATEWAY=192.168.30.1' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
+            "systemctl restart network"
+        ]
+    },
+    "bg03" : {
+        "username": "root",
+        "password": "root",
+        "startType": "headless",
+        "powerOff": false,
+        "shell": [
+            "sed -i '/^IPADDR/c IPADDR=192.168.30.57' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
+            "sed -i '/^GATEWAY/c GATEWAY=192.168.30.1' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
+            "systemctl restart network"
+        ]
+    },
+    "bg04" : {
+        "username": "root",
+        "password": "root",
+        "startType": "headless",
+        "powerOff": false,
+        "shell": [
+            "sed -i '/^IPADDR/c IPADDR=192.168.30.58' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
+            "sed -i '/^GATEWAY/c GATEWAY=192.168.30.1' /etc/sysconfig/network-scripts/ifcfg-enp0s3",
+            "systemctl restart network"
+        ]
+    }
+
+
+
+}
+

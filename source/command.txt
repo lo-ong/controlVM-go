@@ -1,0 +1,3 @@
+// start virtual machine
+VBoxManage startvm "bg01" -type headless
+
