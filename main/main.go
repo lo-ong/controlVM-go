@@ -1,36 +1,33 @@
 package main
 
 import (
-	_ "testing"
-	vbox "github.com/terra-farm/go-virtualbox"
 	"fmt"
-
-	//"time"
+	"github.com/lo_ong/controlVM-go/engine"
 )
 
+const filePath string = "../../source/operation.json"
+
 func main()  {
-	//machines, err := vbox.ListMachines()
-	//fmt.Println(len(machines))
-	//fmt.Println(err)
-	//if err != nil {
-	//	os.Exit(0)
+	vms, rvmNames, _ := engine.FindMachineInLocal()
+	//for _, vm := range vms{
+	//	fmt.Println(vm.Name)
 	//}
-	//
-	//for _, machine := range machines {
-	//	fmt.Println(machine.Name)
-	//}
-
-
-	vbm, _ := vbox.GetMachine("bg01")
-	fmt.Println(vbm.Name)
-
-	vbm.Start()
+	data, _ := engine.ReadJson(filePath)
 
 
 
+	virtualMachines, err := engine.BuildMachine(vms, rvmNames, data)
+	if err != nil {
+		fmt.Println(err)
+	}
 
-	//time.Sleep(5 * time.Second)
-	//vbm.Stop()
+	for _, machine := range virtualMachines {
+		machine.BuildCommand()
+	}
+
+	for _, machine := range virtualMachines {
+		machine.Run()
+	}
 
 
 
