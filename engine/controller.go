@@ -2,7 +2,6 @@ package engine
 
 import (
 	"io/ioutil"
-	vbox "github.com/terra-farm/go-virtualbox"
 	"errors"
 	"encoding/json"
 	"strings"
@@ -18,27 +17,36 @@ const (
 )
 
 // find all virtual machine in local virtual box
-func FindMachineInLocal() ([]*vbox.Machine, []string,  error) {
-	vms, err := vbox.ListMachines()
+func FindMachineInLocal() ([]string, []string,  error) {
+	// Find all virtual machine
+	var listVMNames []string
+	var runningVMNames []string
+	cmdString := "VBoxManage list vms"
+	listVMString, err := Execution(cmdString)
 	if err != nil {
-		return nil, nil, errors.New("Local or virtualbox may be missing some dependencies")
+		return nil, nil, err
+	}
+	lines := strings.Split(listVMString, "\n")
+	for _, line := range lines {
+		if len(line) != 0 {
+			listVMNames = append(listVMNames, strings.Split(strings.Split(line, " ")[0], `"`)[1])
+		}
 	}
 
-	var listMachineNames []string
-	for _, vm := range vms {
-		listMachineNames = append(listMachineNames, vm.Name)
-	}
-
-	// Find Machine is running
-	cmdString := "VBoxManage list runningvms"
+	// Find machine is running
+	cmdString = "VBoxManage list runningvms"
 	runningVMString, err := Execution(cmdString)
 	if err != nil {
 		return nil, nil, err
 	}
+	lines = strings.Split(runningVMString, "\n")
+	for _, line := range lines {
+		if len(line) != 0 {
+			runningVMNames = append(runningVMNames, strings.Split(strings.Split(line, " ")[0], `"`)[1])
+		}
+	}
 
-	runningVMNames := FindRunningMachineNames(listMachineNames, runningVMString)
-
-	return vms, runningVMNames, nil
+	return listVMNames, runningVMNames, nil
 }
 
 // Read operation file source
@@ -88,13 +96,13 @@ func NewVirtualMachine(name string, haveStart bool, configure VirtualMachineConf
 }
 
 // Parse json and build machine
-func BuildMachine(vms []*vbox.Machine, runningVMNames []string, inputJson map[string]interface{}) ([]*VirtualMachine, error) {
+func BuildMachine(listVMNames []string, runningVMNames []string, inputJson map[string]interface{}) ([]*VirtualMachine, error) {
 	var virtualMachines []*VirtualMachine
 
 	for name, configure := range inputJson {
 		machineExist := false
-		for _, vm := range vms {
-			if vm.Name != name {
+		for _, vmName := range listVMNames {
+			if strings.Compare(vmName, name) != 0 {
 				continue
 			} else {
 				machineExist = true
@@ -103,15 +111,18 @@ func BuildMachine(vms []*vbox.Machine, runningVMNames []string, inputJson map[st
 		}
 
 		if !machineExist {
-			return nil, errors.New("virtual machine" + name + "hasn't be created")
+			return nil, errors.New("virtual machine " + name + " hasn't be created")
 		}
 
 		// The virtual machine is here
 		// Whether the machine is running
 		haveStart := false
 		for _, runningName := range runningVMNames{
-			if runningName == name {
+			if strings.Compare(runningName, name) != 0 {
+				continue
+			} else {
 				haveStart = true
+				break
 			}
 		}
 
@@ -223,17 +234,6 @@ func Execution(command string) (string, error) {
 	}
 
 	return string(bytes), nil
-}
-
-func FindRunningMachineNames(listNames []string, s string) []string {
-	var runningNames []string
-	for _, name := range listNames {
-		if strings.Contains(s, name) {
-			runningNames = append(runningNames, name)
-		}
-	}
-
-	return runningNames
 }
 
 func Retry(attempts int, sleep time.Duration, fn func() error) error {

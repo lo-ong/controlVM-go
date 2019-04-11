@@ -3,20 +3,31 @@ package main
 import (
 	"github.com/lo_ong/controlVM-go/engine"
 	"fmt"
+	"time"
+	"strings"
 )
 
 const filePath string = "../../source/operation.json"
 
 func main() {
-	vms, rvmNames, _ := engine.FindMachineInLocal()
-	//for _, vm := range vms{
-	//	fmt.Println(vm.Name)
-	//}
+	// print cost time
+	start := time.Now()
+	defer func() {
+		cost := time.Since(start)
+		fmt.Println("App finish cost: ", cost)
+	}()
+
+	fmt.Println(strings.Split(`"bg01"`, `"`))
+
+
+	listVMNames, runningVMNames, _ := engine.FindMachineInLocal()
+	fmt.Println("listVMNames:", listVMNames)
+	fmt.Println("runningVMNames:", runningVMNames)
+
+
 	data, _ := engine.ReadJson(filePath)
 
-
-
-	virtualMachines, err := engine.BuildMachine(vms, rvmNames, data)
+	virtualMachines, err := engine.BuildMachine(listVMNames, runningVMNames, data)
 	if err != nil {
 		fmt.Println(err)
 	}
